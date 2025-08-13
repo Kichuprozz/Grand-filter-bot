@@ -42,17 +42,16 @@ class temp(object):
     SETTINGS = {}
     FILES_IDS = {}
 
-async def is_subscribed(bot, query):
+async def is_subscribed(bot, user_id, channel_id):
     try:
-        user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
+        user = await bot.get_chat_member(channel_id, user_id)
     except UserNotParticipant:
         pass
     except Exception as e:
-        logger.exception(e)
+        pass
     else:
         if user.status != enums.ChatMemberStatus.BANNED:
             return True
-
     return False
 
 async def get_poster(query, bulk=False, id=False, file=None):
